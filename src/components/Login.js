@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css'; // Import custom CSS for animations and styling
@@ -7,15 +7,8 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(false); // Loading state for button
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/categories', { replace: true });
-    }
-  }, [isLoggedIn, navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -30,8 +23,8 @@ const Login = () => {
 
       if (response.status === 200) {
         const token = response.data.token;
-        localStorage.setItem('token', token);
-        setIsLoggedIn(true); // Update login status to trigger redirection
+        localStorage.setItem('token', token); // Save token to localStorage
+        navigate('/categories', { replace: true }); // Redirect to categories page immediately
       } else {
         setErrorMessage('Login failed. Please check your credentials.');
       }
@@ -91,9 +84,10 @@ const Login = () => {
                 disabled={isLoading}
               >
                 {isLoading ? (
-                  <div className="spinner-border spinner-border-sm" role="status">
-                    <span className="visually-hidden">Loading...</span>
-                  </div>
+                  <>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span className="ms-2">Logging in...</span>
+                  </>
                 ) : (
                   'Log In'
                 )}

@@ -19,8 +19,6 @@ const AddCategoryForm = ({ onAddCategory }) => {
     setNewCategory({ ...newCategory, image: e.target.files[0] });
   };
 
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -39,61 +37,93 @@ const AddCategoryForm = ({ onAddCategory }) => {
       });
 
       onAddCategory(response.data);
-      setNewCategory({ name: '', description: '', image: null });
+      setNewCategory({ name: '', image: null });
       alert('Category added successfully!');
     } catch (error) {
       console.error('Error adding category:', error);
-      alert('Failed to add category.');
+      alert('Failed to add category. Please try again.');
     } finally {
       setLoading(false);
     }
   };
 
-  const navigateback = () => {
+  const navigateBack = () => {
     navigate('/categories', { replace: true });
   };
 
   return (
-    <div className="card mb-4 shadow-sm">
-      <div className="card-body">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Name
-            </label>
-            <input
-              type="text"
-              className="form-control"
-              id="name"
-              name="name"
-              value={newCategory.name}
-              onChange={handleInputChange}
-              required
-            />
+    <div className="container mt-5">
+      <div className="row justify-content-center">
+        <div className="col-md-8 col-lg-6">
+          <div className="card shadow">
+            <div className="card-header bg-primary text-white">
+              <h3 className="card-title mb-0">Upload New Image</h3>
+            </div>
+            <div className="card-body">
+              <form onSubmit={handleSubmit}>
+                <div className="mb-3">
+                  <label htmlFor="name" className="form-label">
+                    Name for Image
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="name"
+                    name="name"
+                    value={newCategory.name}
+                    onChange={handleInputChange}
+                    placeholder="Enter category name"
+                    required
+                  />
+                </div>
+                <div className="mb-4">
+                  <label htmlFor="image" className="form-label">
+                     Image
+                  </label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    id="image"
+                    name="image"
+                    onChange={handleImageChange}
+                    accept="image/*"
+                    required
+                  />
+                  <small className="form-text text-muted">
+                    Upload an image for the category (JPEG, PNG, etc.).
+                  </small>
+                </div>
+                <div className="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button
+                    type="button"
+                    onClick={navigateBack}
+                    className="btn btn-outline-danger me-md-2"
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    className="btn btn-primary"
+                    disabled={loading}
+                  >
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        <span className="ms-2">Uploading...</span>
+                      </>
+                    ) : (
+                      'Upload'
+                    )}
+                  </button>
+                </div>
+              </form>
+            </div>
           </div>
-          <div className="mb-3">
-            <label htmlFor="image" className="form-label">
-              Image
-            </label>
-            <input
-              type="file"
-              className="form-control"
-              id="image"
-              name="image"
-              onChange={handleImageChange}
-              accept="image/*"
-              required
-            />
-          </div>
-          <div className="d-flex gap-3 mb-4">
-            <button type="submit" className="btn btn-primary mb-4" disabled={loading}>
-                {loading ? 'Adding...' : 'Upload'}
-            </button>
-            <button onClick={navigateback} className="btn btn-danger mb-4">
-                Back
-            </button>
-          </div>
-        </form>
+        </div>
       </div>
     </div>
   );
