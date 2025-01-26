@@ -23,7 +23,7 @@ const Login = () => {
     setErrorMessage(''); // Clear previous error messages
 
     try {
-      const response = await axios.post('http://localhost:8000/api/login/', {
+      const response = await axios.post('https://exciting-de-visionerz-cbb5aa24.koyeb.app/api/login/', {
         username,
         password,
       });

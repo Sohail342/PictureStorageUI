@@ -14,7 +14,7 @@ const CategoriesList = () => {
   const fetchCategories = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await axios.get('http://localhost:8000/api/categories/', {
+      const response = await axios.get('https://exciting-de-visionerz-cbb5aa24.koyeb.app/api/categories/', {
         headers: {
           Authorization: `Bearer ${token}`,
         },

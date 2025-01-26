@@ -9,7 +9,7 @@ const Logout = () => {
     const handleLogout = async () => {
       try {
         // Send a logout request to the backend
-        await axios.post('http://localhost:8000/api/logout/', {}, {
+        await axios.post('https://exciting-de-visionerz-cbb5aa24.koyeb.app/api/logout/', {}, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('token')}`,
           },
