@@ -31,7 +31,7 @@ const AddCategoryForm = ({ onAddCategory }) => {
       formData.append('name', newCategory.name);
       formData.append('image', newCategory.image);
 
-      const response = await axios.post('http://localhost:8000/api/categories/', formData, {
+      const response = await axios.post('https://exciting-de-visionerz-cbb5aa24.koyeb.app/api/categories/', formData, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Content-Type': 'multipart/form-data',
